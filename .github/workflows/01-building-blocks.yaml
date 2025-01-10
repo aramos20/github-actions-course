@@ -4,20 +4,17 @@ on:
 
 jobs:
   echo-hello:
-   runs-on: ubuntu-latest
-   steps:
-    - name: Say hello
-      run: echo "Hello, World!"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hello
+        run: echo "Hello, World!"
 
   echo-goodbye:
     runs-on: ubuntu-latest
-    name: Say hello
     steps:
-    
-     - name: Failed step
-       run: | 
-         echo "I will fail"
-         return "404"
-       
-     - name: Say goodbye
-       run: echo "Goodbye!"
+      - name: Successful step
+        run: |
+          echo "I will succeed"
+          exit 0
+      - name: Say goodbye
+        run: echo "Goodbye!"
