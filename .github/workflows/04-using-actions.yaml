@@ -1,6 +1,6 @@
 name: 04-using-actions
 
-on: push
+on: workflow_dispatch
 
 jobs:
   build:
@@ -18,6 +18,6 @@ jobs:
         working-directory: 04-using-actions/react-app
         run: npm install --from-lock-file
 
-      - name: Test
+      - name: Run Unit Tests
         working-directory: 04-using-actions/react-app
-        run: run test
+        run: npm run test
