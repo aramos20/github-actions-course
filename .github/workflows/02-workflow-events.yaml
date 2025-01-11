@@ -1,13 +1,12 @@
 name: 02-workflow-events.yaml
+
 on:
-  schedule:
-    - cron: "30 5 * * 1,3"
-  push:
   pull_request:
   workflow_dispatch:
+
 jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
       - name: Show the trigger
-        run: echo "The event that triggered the workflow is ${{ github.event_name }}"
+        run: echo "The event that triggered the workflow is ${{ github.event_name }} event."
