@@ -16,4 +16,4 @@ jobs:
 
       - name: Install dependencies
         working-directory: 04-using-actions/react-app
-        run: npm ci
+        run: npm install --frozen-lockfile
