@@ -1,0 +1,12 @@
+name: 04-using-actions
+
+on: push
+
+jobs:
+  build:
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Printing Folders
+        run: ls -R
