@@ -12,9 +12,9 @@ on:
       debug:
         type: boolean
         default: true
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   echo-data:
