@@ -8,7 +8,7 @@ on:
     inputs:
       debug:
         type: boolean
-        default: false
+        default: true
 
 jobs:
   echo:
