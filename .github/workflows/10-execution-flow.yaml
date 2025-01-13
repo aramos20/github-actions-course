@@ -3,7 +3,7 @@ name: 10 - Controlling the Execution Flow
 on:
   workflow_dispatch:
     inputs:
-      debug:
+      pass-unit-tests:
         type: boolean
         default: false
 
