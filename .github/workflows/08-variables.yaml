@@ -24,7 +24,7 @@ jobs:
       - name: Print Prod Variables
         run: |
           echo "Org overwritten var: ${{ vars.OVERWRITTEN_VAR }}"
-          echo "Repo var: ${{ vars.REPOSITORY_VAR }}"
+          echo "Repo var: ${{ env.REPOSITORY_VAR }}"
           echo "Environment var: ${{ vars.TARGET_VAR }}"
 
   echo-undefined:
