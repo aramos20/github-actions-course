@@ -25,12 +25,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build
-        run: echo "Building from tag ${{ github.event.inputs.tag }}"
+        run: echo "Building from tag ${{ inputs.tag }}"
 
   deploy:
     runs-on: ubuntu latest
-    if: ${{ success() && github.event.inputs.dry-run == 'false' }}
-    environment: ${{ github.event.inputs.target }}
+    if: ${{ success() && !inputs.dry-run }}
+    environment: ${{ inputs.target }}
+    needs: build
     steps:
       - name: Deploy
-        run: echo "Deploying to ${{ github.event.inputs.target }}"
+        run: echo "Deploying to ${{ inputs.target }}"
