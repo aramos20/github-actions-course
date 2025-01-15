@@ -16,8 +16,41 @@ on:
         description: "Node.js version to use"
 
 jobs:
+  install-deps:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 13-caching/react-app
+    outputs:
+      cache-key: ${{ steps.cache-key.outputs.CACHE_KEY}}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Calculate cache Key
+        id: cache-key
+        run: echo "CACHE_KEY=${{ runner.os }}-node-modules-${{ inputs.node-version }}-${{ hashFiles('13-caching/react-app/package-lock.json' )}}"
+
+      - name: Download cached dependencies
+        uses: actions/cache@v3
+        if: ${{ inputs.use-cache }}
+        id: cache
+        with:
+          path: 13-caching/react-app/node_modules
+          key: ${{ steps.cache-key.outputs.CACHE_KEY }}
+
+      - name: Install dependencies
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        run: npm install
+
   build:
     runs-on: ubuntu-latest
+    needs: install-deps
     defaults:
       run:
         working-directory: 13-caching/react-app
@@ -34,13 +67,33 @@ jobs:
         id: cache
         with:
           path: 13-caching/react-app/node_modules
-          key: ${{ runner.os }}-node-${{ inputs.node-version }}-${{ hashFiles('13-caching/react-app/package-lock.json') }}
-      - name: Install dependencies
-        if: ${{ !steps.cache.outputs.cache-hit }}
-        run: npm install
+          key: ${{ needs.install-deps.outputs.cache-key }}
       # - name: Testing
       #   run: npm run test | exit 0
       - name: Building
         run: npm run build
       - name: Deploying to nonprod
         run: echo "Deploying to nonprod..."
+
+  linting:
+    runs-on: ubuntu-latest
+    needs: install-deps
+    defaults:
+      run:
+        working-directory: 13-caching/react-app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Download cached dependencies
+        uses: actions/cache@v3
+        if: ${{ inputs.use-cache }}
+        id: cache
+        with:
+          path: 13-caching/react-app/node_modules
+          key: ${{ needs.install-deps.outputs.cache-key }}
