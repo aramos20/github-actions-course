@@ -29,9 +29,9 @@ jobs:
         with:
           node-version: inputs.node-version
       - name: Download cached dependencies
-        id: cache
-        if: ${{ inputs.use-cache }}
         uses: actions/cache@v3
+        if: ${{ inputs.use-cache }}
+        id: cache
         with:
           path: 13-caching/react-app/node_modules
           key: ${{ runner.os }}-node-${{ inputs.node-version }}-${{ hashFiles('13-caching/react-app/package-lock.json') }}
