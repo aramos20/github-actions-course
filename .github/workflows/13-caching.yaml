@@ -35,9 +35,9 @@ jobs:
         with:
           path: 13-caching/react-app/node_modules
           key: ${{ runner.os }}-node-${{ inputs.node-version }}-${{ hashFiles('13-caching/react-app/package-lock.json') }}
-      - name: Install dependencies | exit 0
+      - name: Install dependencies
         if: ${{ !steps.cache.outputs.cache-hit }}
-        run: npm ci
+        run: npm ci | exit 0
       - name: Testing
         run: npm run test
       - name: Building
