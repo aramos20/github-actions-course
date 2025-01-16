@@ -44,6 +44,9 @@ jobs:
       - name: Build code
         run: npm run build
 
+      - name: Show folder structure
+        run: ls -R
+
       - name: Upload build files
         uses: actions/upload-artifact@v3
         with:
