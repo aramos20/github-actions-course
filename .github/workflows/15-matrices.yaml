@@ -16,6 +16,14 @@ jobs:
           - 18.x
           - 20.x
           - 21.x
+        include:
+          - os: ubuntu-latest
+            node-version: 16.x
+          - os: ubuntu-latest
+            node-version: 21.x
+            tag: experimental
+          - os: macOS-latest
+            node-version: 21.x
     steps:
       - name: Setup node
         uses: actions/setup-node@v3
