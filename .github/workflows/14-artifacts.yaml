@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.build-artifact-key }}
-          path: 14-artifacts/react-app/build
+          path: 14-artifacts/react-app/dist
 
   deploy:
     runs-on: ubuntu-latest
@@ -62,5 +62,6 @@ jobs:
         with:
           name: ${{ env.build-artifact-key }}
           path: build
+
       - name: Show folder structure
         run: ls -R
