@@ -1,7 +1,6 @@
 name: 16 - Working with Environments
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   deploy-staging:
@@ -23,10 +22,10 @@ jobs:
 
   deploy-prod:
     runs-on: ubuntu-latest
-    environment: 'prod'
+    environment: "prod"
     env:
       my-env-value: "${{ vars.MY_ENV_VALUE || 'default value'}}"
     steps:
-      - name: Echo vars:
+      - name: Echo vars
         run: |
           echo "Deploying to prod..."
