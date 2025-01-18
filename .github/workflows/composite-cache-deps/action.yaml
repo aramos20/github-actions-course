@@ -1,17 +1,14 @@
 name: "Cache Node and NPM Dependencies"
-description: "This action allows to cache both Node and NPM dependencies based on the package-lock.json file."
-
+description: "Caches Node.js dependencies for faster builds"
 inputs:
   node-version:
     description: "The Node.js version to use."
     default: "20.x"
     required: true
-
   working-directory:
     required: false
     description: "The working directory of the application."
     default: "."
-
 runs:
   using: composite
   steps:
@@ -20,7 +17,7 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
-    - name: Cache dependecies
+    - name: Cache dependencies
       id: cache
       uses: actions/cache@v3
       with:
@@ -28,7 +25,7 @@ runs:
         key: ${{ runner.os }}-node-${{ inputs.node-version }}-${{ hashFiles(format('{0}/{1}', inputs.working-directory, 'package-lock.json')) }}
 
     - name: Install dependencies
-      needs: cache
-      if: ${{ !needs.cache.outputs.cache-hit }}
-      working-directory: ${{ inputs.working-directory }}
-      run: npm ci
+      if: ${{ !steps.cache.outputs.cache-hit }}
+      run: |
+        cd ${{ inputs.working-directory }}
+        npm ci
