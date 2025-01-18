@@ -5,7 +5,7 @@ inputs:
   node-version:
     description: "The Node.js version to use."
     default: "20.x"
-    required: "true"
+    required: true
 
   working-directory:
     required: false
@@ -25,7 +25,7 @@ runs:
       uses: actions/cache@v3
       with:
         path: ${{ inputs.working-directory }}/node_modules
-        key: ${{ runner.os }}-node-${{ inputs.node-version }}-${{ hashFiles(format('{0}/{1}', inputs.working-dir, 'package-lock.json')) }}
+        key: ${{ runner.os }}-node-${{ inputs.node-version }}-${{ hashFiles(format('{0}/{1}', inputs.working-directory, 'package-lock.json')) }}
 
     - name: Install dependencies
       needs: cache

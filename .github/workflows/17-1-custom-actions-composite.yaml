@@ -1,6 +1,7 @@
 name: 17 - 1 - Custom Actions - Composite
 
 run-name: 17 - 1 - Custom Actions - Composite | env - ${{ inputs.target-env }}
+
 env:
   working-directory: 17-1-custom-actions/react-app
 
@@ -16,6 +17,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
