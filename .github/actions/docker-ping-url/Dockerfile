@@ -1,15 +1,22 @@
-FROM python:alpine3.19 AS base
+FROM python:3.11-slim
 
 # Configurar el directorio de trabajo
 WORKDIR /app
 
+# Instalar dependencias del sistema necesarias para NumPy y OpenCV
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  build-essential \
+  cmake \
+  python3-opencv \
+  libopencv-dev \
+  libglib2.0-0 \
+  libsm6 \
+  libxext6 \
+  libxrender-dev
+
 # Copiar las dependencias
 COPY requirements.txt .
 
-# Instalar herramientas de compilación necesarias para paquetes como numpy y OpenCV
-RUN apk add --no-cache \
-  gcc g++ make musl-dev python3-dev libffi-dev openssl-dev \
-  cmake jpeg-dev zlib-dev freetype-dev tiff-dev libpng-dev openblas-dev py3-setuptools
 
 # Verificar la versión de Python
 RUN python -V
