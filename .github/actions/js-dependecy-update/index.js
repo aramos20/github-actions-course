@@ -33,7 +33,7 @@ async function run() {
     return;
   }
 
-  if (!validateDirectoryName({ dirName: workingDirectory })) {
+  if (!validateDirectoryName({ dirName: workingDir })) {
     core.setFailed(
       'Invalid working directory name. Directory names should include only characters, numbers, hyphens, underscores, and forward slashes.'
     );
@@ -42,7 +42,7 @@ async function run() {
 
   core.info(`[js-dependency-update] : base branch is ${baseBranch}`);
   core.info(`[js-dependency-update] : target branch is ${targetBranch}`);
-  core.info(`[js-dependency-update] : working directory is ${workingDirectory}`);
+  core.info(`[js-dependency-update] : working directory is ${workingDir}`);
 
   await exec.exec('npm update', [], {
     ...commonExecOpts,
