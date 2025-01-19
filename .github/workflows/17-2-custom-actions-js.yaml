@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check for dependency updates
-        uses: ./.github/actions/js-dependecy-update
+        uses: ./.github/actions/js-dependency-update
         with:
           base-branch: ${{ inputs.base-branch }}
           head-branch: ${{ inputs.target-branch }}
