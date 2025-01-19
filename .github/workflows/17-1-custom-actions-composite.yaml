@@ -28,6 +28,6 @@ jobs:
           working-dir: ${{ env.working-directory }}
           target-env: ${{ inputs.target-env }}
       - name: Test
-        run: run "Running tests..."
+        run: echo "Running tests..."
       - name: Build
         run: npm run build
