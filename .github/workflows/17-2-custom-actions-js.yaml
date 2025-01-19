@@ -1,5 +1,5 @@
 name: 17 - 2 - Custom Actions - JS
-run-name: 17 - 2 - Custom Actions - JS | ${{ inputs.base-branch }} - ${{ inputs.target-branch }} - ${{ inputs.working-dir }}
+run-name: 17 - 2 - Custom Actions - JS | ${{ inputs.base-branch }} - ${{ inputs.target-branch }} - ${{ inputs.working-directory }}
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
       target-branch:
         type: string
         default: update-dependencies
-      working-dir:
+      working-directory:
         type: string
         default: 17-custom-actions/react-app
 
@@ -28,5 +28,5 @@ jobs:
         with:
           base-branch: ${{ inputs.base-branch }}
           target-branch: ${{ inputs.target-branch }}
-          working-directory: ${{ inputs.working-dir }}
+          working-directory: ${{ inputs.working-directory }}
           gh-token: ${{ secrets.GITHUB_TOKEN }}
