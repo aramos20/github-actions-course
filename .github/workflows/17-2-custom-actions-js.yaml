@@ -13,7 +13,7 @@ on:
         default: update-dependencies
       working-directory:
         type: string
-        default: 17-custom-acitons/react-app
+        default: 17-custom-actions/react-app
 
 jobs:
   dependecy-update:
