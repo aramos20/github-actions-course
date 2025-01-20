@@ -31,7 +31,8 @@ jobs:
           target-env: ${{ inputs.target-env }}
 
       - name: Print setup deps output
-        run: echo "Installed dependencies: ${{ steps.setup-deps.outputs.installed-steps }}"
+        run: |
+          echo "Installed dependencies: ${{ steps.setup-deps.outputs.installed-steps }}"
 
       - name: Test
         run: echo "Running tests..."
