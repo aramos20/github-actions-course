@@ -10,5 +10,6 @@ jobs:
 
   e2e-tests:
     uses: aramos20/github-actions-course-example-e2e/.github/workflows/e2e.yaml@main
+    needs: deploy
     secrets:
       access_token: ${{ secrets.GH_TOKEN }}
