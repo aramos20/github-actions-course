@@ -1,15 +1,16 @@
 name: 18 - 3 - Reusable Workflows
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 jobs:
   deploy:
     uses: ./.github/workflows/18-1-reusable-workflows.yaml
     with:
-      target-directory: "deploy"
+      target-directory: dummmy-dir
 
   e2e-tests:
     uses: aramos20/github-actions-course-example-e2e/.github/workflows/e2e.yaml@main
     needs: deploy
     secrets:
-      access_token: ${{ secrets.GH_TOKEN }}
+      access-token: ${{ secrets.GH_TOKEN }}
