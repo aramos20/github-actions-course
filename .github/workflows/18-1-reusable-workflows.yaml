@@ -12,7 +12,7 @@ on:
         value: ${{ jobs.build.outputs.build-status }}
       url:
         description: The url of the deployed version
-        value: ${{ jobs.deploy.output.url }}
+        value: ${{ jobs.build.outputs.url}}
 
 jobs:
   build:
