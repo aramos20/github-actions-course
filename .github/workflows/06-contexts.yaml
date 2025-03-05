@@ -1,31 +1,27 @@
-name: 06-contexts
-
+name: 06 - Contexts
 run-name: 06 - Contexts | DEBUG - ${{ inputs.debug }}
-
-env:
-  MY_WORKFLOW_VAR: "workflow"
-  MY_OVERWRITTEN_VAR: "workflow"
 
 on:
   workflow_dispatch:
     inputs:
       debug:
         type: boolean
-        default: true
-  # push:
-  #   branches:
-  #     - main
+        default: false
+
+env:
+  MY_WORKFLOW_VAR: 'workflow'
+  MY_OVERWRITTEN_VAR: 'workflow'
 
 jobs:
   echo-data:
-    env:
-      MY_JOB_VAR: "job"
-      MY_OVERWRITTEN_VAR: "job"
     runs-on: ubuntu-latest
+    env:
+      MY_JOB_VAR: 'job'
+      MY_OVERWRITTEN_VAR: 'job'
     steps:
-      - name: Display Information
+      - name: Display information
         run: |
-          echo "Event name: ${{ github.event_name}}"
+          echo "Event Name: ${{ github.event_name }}"
           echo "Ref: ${{ github.ref }}"
           echo "SHA: ${{ github.sha }}"
           echo "Actor: ${{ github.actor }}"
@@ -33,22 +29,22 @@ jobs:
           echo "Run ID: ${{ github.run_id }}"
           echo "Run number: ${{ github.run_number }}"
       - name: Retrieve Variable
-        run: echo "MY_VAR is ${{ vars.MY_VAR }}"
+        run: |
+          echo "Variable value: ${{ vars.MY_VAR }}"
       - name: Print Env Variables
         env:
-          MY_OVERWRITTEN_VAR: "step"
+          MY_OVERWRITTEN_VAR: 'step'
         run: |
           echo "Workflow env: ${{ env.MY_WORKFLOW_VAR }}"
           echo "Overwritten env: ${{ env.MY_OVERWRITTEN_VAR }}"
-      - name: Print Env Variables V2
+      - name: Print Env Variables
         run: |
           echo "Workflow env: ${{ env.MY_WORKFLOW_VAR }}"
           echo "Overwritten env: ${{ env.MY_OVERWRITTEN_VAR }}"
-
   echo-data2:
     runs-on: ubuntu-latest
     steps:
-      - name: Print Env Variables V3
+      - name: Print Env Variables
         run: |
-          echo "Workflow env: ${{ env.MY_WORKFLOW_VAR }}"
-          echo "Overwritten env: ${{ env.MY_OVERWRITTEN_VAR }}"
+          echo "Workflow env: $MY_WORKFLOW_VAR"
+          echo "Overwritten env: $MY_OVERWRITTEN_VAR"
