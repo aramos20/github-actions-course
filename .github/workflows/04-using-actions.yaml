@@ -1,4 +1,4 @@
-name: 04-using-actions
+name: 04 - Using Actions
 
 on: workflow_dispatch
 
@@ -9,16 +9,13 @@ jobs:
       run:
         working-directory: 04-using-actions/react-app
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Node Setup
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci
-
       - name: Run Unit Tests
-        run: npm run test --watchAll=false
+        run: npm run test
