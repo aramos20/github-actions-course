@@ -1,24 +1,24 @@
-name: 11-inputs
+name: 11 - Working with Inputs
 
 on:
   workflow_dispatch:
     inputs:
       dry-run:
         type: boolean
-        description: "Skip deployment and only print build output"
+        description: Skip deployment and only print build output
         default: false
       target:
         type: environment
         required: true
-        description: "Which environment the workflow will target"
+        description: Which environment the workflow will target
       tag:
         type: choice
-        description: "Release from which to build and deploy"
         options:
           - v1
           - v2
           - v3
         default: v3
+        description: Release from which to build and deploy
 
 jobs:
   build:
@@ -26,10 +26,9 @@ jobs:
     steps:
       - name: Build
         run: echo "Building from tag ${{ inputs.tag }}"
-
   deploy:
-    runs-on: ubuntu latest
-    if: ${{ success() && !inputs.dry-run }}
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.dry-run }}
     environment: ${{ inputs.target }}
     needs: build
     steps:
