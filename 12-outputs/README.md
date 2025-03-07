@@ -4,11 +4,14 @@ In GitHub Actions, outputs allow you to pass data between different jobs within 
 
 ## Overview
 
+- **Outputs** act as parameters that allow you to declare and share data between jobs.
 - You can use `jobs.<job_id>.outputs` to define outputs for a specific job.
 - Job outputs containing expressions are evaluated at the end of each job.
-- Outputs that contain secrets are redacted on the runner and not exposed in GitHub Actions.
+- Outputs that contain secrets are redacted on the runner and not exposed in GitHub Actions logs.
 
-## Example: Using Outputs for a Job
+---
+
+## Example: Using Outputs in a Workflow
 
 Here's an example to demonstrate how outputs work in a GitHub Actions workflow:
 
@@ -40,5 +43,35 @@ jobs:
         run: echo "Build Status: $BUILD_STATUS"
 ```
 
-In this example, the `build` job defines an output called `result`, and the `deploy` job depends on the `build` job. The result is shared from `build` to `deploy`, allowing you to pass data between these two jobs seamlessly.
+### Explanation:
+- The **`build` job** defines an output named `result` using `jobs.build.outputs.result`.
+- The **`deploy` job** depends on `build` (via `needs: build`).
+- The **`deploy` job** accesses the `result` output from `build` using `needs.build.outputs.result`.
+
+---
+
+## Key Concepts
+
+### Declaring Outputs
+Use `outputs.<name>` in the job definition to declare an output.
+```yaml
+outputs:
+  result: ${{ steps.build.outputs.result }}
+```
+
+### Accessing Outputs
+Use `needs.<job_id>.outputs.<name>` in dependent jobs.
+```yaml
+env:
+  BUILD_STATUS: ${{ needs.build.outputs.result }}
+```
+
+### Security Considerations
+- Outputs containing **secrets** are automatically redacted in logs.
+- Avoid exposing sensitive information via outputs.
+
+### Common Use Cases
+- **Share build artifacts** (e.g., filenames, versions).
+- **Pass status flags** (e.g., `success`/`failure`).
+- **Chain dependent jobs dynamically** based on previous job results.
 

@@ -7,6 +7,7 @@ Artifacts in GitHub Actions allow you to persist data between workflow jobs and 
 - Artifacts are files or collections of files produced during a workflow run.
 - Common use cases include saving build and test outputs.
 - Artifacts can be uploaded during a workflow run and downloaded later.
+- When a workflow produces something other than a log entry, the product is called an artifact.
 
 ## Uploading Artifacts
 

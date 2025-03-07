@@ -6,6 +6,8 @@ GitHub Actions provides access to a variety of GitHub contexts that allow you to
 
 GitHub contexts are predefined variables that contain information about the current workflow run, the event that triggered the workflow, and the repository where the workflow is hosted. These contexts are accessible as variables and can be used to customize and parameterize your workflows.
 
+In addition to default environment variables, you can use defined variables as contexts. Contexts and default variables are similar in that they both provide access to environment information, but they have some important differences. While default environment variables can only be used within the runner, context variables can be used at any point within the workflow. For example, context variables allow you to run an `if` statement to evaluate an expression before the runner is executed.
+
 ## Common GitHub Contexts
 
 Here are some common GitHub contexts that you can use within your workflows:
@@ -38,9 +40,9 @@ jobs:
         echo "SHA: ${{ github.sha }}"
 ```
 
-### Example 2: Use env Context
+### Example 2: Use `env` Context
 
-Access environment variables and secrets using the env context:
+Access environment variables and secrets using the `env` context:
 
 ```yaml
 jobs:
@@ -54,11 +56,9 @@ jobs:
           MY_SECRET: ${{ secrets.MY_SECRET }}
 ```
 
-Example 3: Utilize inputs Context
+### Example 3: Utilize `inputs` Context
 
-Retrieve input values defined in your workflow using the inputs context:
-
-[//]: # (TODO: Add link to inputs folder)
+Retrieve input values defined in your workflow using the `inputs` context:
 
 ```yaml
 jobs:
@@ -70,7 +70,7 @@ jobs:
           echo "Input Value: ${{ inputs.my_input }}"
 ```
 
-### Example 4: Define and Access outputs Context
+### Example 4: Define and Access `outputs` Context
 
 Define workflow-level outputs using the `outputs` context:
 
@@ -87,4 +87,3 @@ jobs:
     - name: Use Workflow Variable
       run: |
         echo "Workflow Variable Value: ${{ steps.set_var.outputs.name }}"
-```
