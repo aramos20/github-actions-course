@@ -1,59 +1,43 @@
 name: 15 - Working with Matrices
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 jobs:
-  backwards-compability:
+  backwards-compatibility:
+    name: ${{ matrix.os }}-${{ matrix.node-version }}
     runs-on: ${{ matrix.os }}
-    name: Node ${{ matrix.os }} - ${{ matrix.node-version }}
     strategy:
       fail-fast: true
       matrix:
+        node-version: [18.x, 20.x, 21.x]
         os:
           - ubuntu-latest
           - windows-latest
-          - macOS-latest]
-        node-version:
-          - 18.x
-          - 20.x
-          - 21.x
         include:
           - os: ubuntu-latest
             node-version: 16.x
           - os: ubuntu-latest
             node-version: 21.x
             tag: experimental
-          - os: macOS-latest
-            node-version: 21.x
     steps:
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Fail if experimental
-        if: ${{ matrix.tag == 'experimental' }}
-        run: exit 1
       - name: Perform some tests
         run: |
-          echo "Running tests on ${{ matrix.os }} with Node ${{ matrix.node-version }}"
-          sleep 10
+          echo "Running tests on OS ${{ matrix.os }} and NodeJS ${{ matrix.node-version }}"
       - name: Upload test results
         run: echo "Uploading test results"
-
   include-example:
-    runs-on: ubuntu-latest
     name: ${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}-${{ matrix.opacity }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        color:
-          - red
-          - green
-        shape:
-          - circle
-          - square
-        size:
-          - small
-          - large
+        color: [red, green]
+        shape: [circle, square]
+        size: [small, large]
         include:
           - color: red
             opacity: 75
@@ -70,4 +54,4 @@ jobs:
             shape: circle
     steps:
       - name: Dummy step
-        run: echo "Running ${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}-${{ matrix.opacity }}"
+        run: echo "${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}-${{ matrix.opacity }}"
