@@ -1,11 +1,6 @@
 name: Cache Node and NPM Dependencies
 description: This action allows to cache both Node and NPM dependencies based on the package-lock.json file.
 
-outputs:
-  installed-deps:
-    description: Whether dependencies were installed or not.
-    value: ${{ !steps.cache.outputs.cache-hit }}
-
 inputs:
   node-version:
     description: NodeJS version to use
@@ -20,11 +15,16 @@ inputs:
     default: dev
     required: false
 
+outputs:
+  installed-deps:
+    description: Whether dependencies were installed or not
+    value: ${{ steps.cache.outputs.cache-hit != 'true' }}
+
 runs:
   using: composite
   steps:
     - name: Setup NodeJS version ${{ inputs.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
     - name: Cache dependencies
